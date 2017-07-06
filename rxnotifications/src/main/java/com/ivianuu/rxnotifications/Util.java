@@ -25,6 +25,8 @@ import android.provider.Settings;
  */
 final class Util {
 
+    private Util() {}
+
     static boolean hasNotificationListenerPermission(Context context) {
         ContentResolver contentResolver = context.getContentResolver();
         String enabledNotificationListeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners");

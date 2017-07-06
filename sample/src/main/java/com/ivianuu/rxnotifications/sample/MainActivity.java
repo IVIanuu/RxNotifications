@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.add(disposable);
     }
 
-    private void startListeníng(RxNotificationListener rxNotificationListener) {
+    private void startListeníng(final RxNotificationListener rxNotificationListener) {
         Disposable notificationsEventsDisposable = rxNotificationListener.observeNotificationEvents()
                 .subscribe(new Consumer<NotificationEvent>() {
                     @Override
@@ -81,51 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 });
         compositeDisposable.add(notificationsEventsDisposable);
 
-        Disposable activeNotificationsDisposable = rxNotificationListener.observeActiveNotifications()
-                .subscribe(new Consumer<List<StatusBarNotification>>() {
-                    @Override
-                    public void accept(List<StatusBarNotification> notifications) throws Exception {
-                        Log.d("rxnotifications", "active notifications changed");
-                    }
-                });
-        compositeDisposable.add(activeNotificationsDisposable);
-
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Disposable interruptionFilterDisposable = rxNotificationListener.observeInterruptionFilter()
-                    .subscribe(new Consumer<Integer>() {
-                        @Override
-                        public void accept(Integer integer) throws Exception {
-                            switch (integer) {
-                                case INTERRUPTION_FILTER_ALARMS:
-                                    Log.d("rxnotifications", "interruptionfilter alarms");
-                                    break;
-                                case INTERRUPTION_FILTER_ALL:
-                                    Log.d("rxnotifications", "interruptionfilter all");
-                                    break;
-                                case INTERRUPTION_FILTER_NONE:
-                                    Log.d("rxnotifications", "interruptionfilter none");
-                                    break;
-                                case INTERRUPTION_FILTER_PRIORITY:
-                                    Log.d("rxnotifications", "interruptionfilter priority");
-                                    break;
-                                case INTERRUPTION_FILTER_UNKNOWN:
-                                    Log.d("rxnotifications", "interruptionfilter unknown");
-                                    break;
-                            }
-                        }
-                    });
-            compositeDisposable.add(interruptionFilterDisposable);
-
-            Disposable rankingMapDisposable = rxNotificationListener.observeRanking()
-                    .subscribe(new Consumer<NotificationListenerService.RankingMap>() {
-                        @Override
-                        public void accept(NotificationListenerService.RankingMap rankingMap) throws Exception {
-                            Log.d("rxnotifications", "ranking map changed");
-                        }
-                    });
-            compositeDisposable.add(rankingMapDisposable);
-        }
     }
 
     @Override
