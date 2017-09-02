@@ -18,6 +18,7 @@ package com.ivianuu.rxnotifications;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import com.ivianuu.rxserviceconnection.RxServiceConnection;
@@ -64,6 +65,7 @@ public class RxNotifications {
     /**
      * Returns the notification listener
      */
+    @CheckResult @NonNull
     public Single<RxNotificationListener> getNotificationListener() {
         return Single.create(new SingleOnSubscribe<RxNotificationListener>() {
             @Override

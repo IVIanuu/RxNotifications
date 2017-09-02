@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.UserHandle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
@@ -129,31 +130,31 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
 
     // RX NOTIFICATION LISTENER
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Observable<Boolean> observeListenerConnected() {
         return listenerConnectedSubject;
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<Boolean> isListenerConnected() {
         return Single.just(service.isListenerConnected());
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<NotificationEvent> observeNotificationEvents() {
         return notificationEventsSubject;
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<List<StatusBarNotification>> observeActiveNotifications() {
         return activeNotificationsSubject;
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<List<StatusBarNotification>> getActiveNotifications() {
         List<StatusBarNotification> notifications = new ArrayList<>();
@@ -165,7 +166,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<List<StatusBarNotification>> getSnoozedNotifications() {
         List<StatusBarNotification> notifications = new ArrayList<>();
@@ -176,13 +177,13 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
         return Single.just(notifications);
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable cancelNotification(@NonNull StatusBarNotification statusBarNotification) {
         return cancelNotifications(Collections.singletonList(statusBarNotification));
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable cancelNotifications(@NonNull final List<StatusBarNotification> statusBarNotification) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -200,7 +201,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
         });
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable cancelAllNotifications() {
         return Completable.fromCallable(new Callable<Object>() {
@@ -213,14 +214,14 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable setNotificationShown(@NonNull StatusBarNotification sbn) {
         return setNotificationsShown(Collections.singletonList(sbn));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable setNotificationsShown(@NonNull final List<StatusBarNotification> sbns) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -237,14 +238,14 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable snoozeNotification(@NonNull StatusBarNotification sbn, long duration) {
         return snoozeNotifications(Collections.singletonList(sbn), duration);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable snoozeNotifications(@NonNull final List<StatusBarNotification> sbns, final long duration) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -259,21 +260,21 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<ChannelEvent> observeChannelEvents() {
         return channelEventsSubject;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<List<NotificationChannel>> getNotificationChannels(@NonNull String pkg, @NonNull UserHandle user) {
         return Single.just(service.getNotificationChannels(pkg, user));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable updateNotificationChannel(@NonNull final String pkg, @NonNull final UserHandle user, @NonNull final NotificationChannel channel) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -286,35 +287,35 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<ChannelGroupEvent> observeChannelGroupEvents() {
         return channelGroupEventsSubject;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<List<NotificationChannelGroup>> getNotificationChannelGroups(@NonNull String pkg, @NonNull UserHandle user) {
         return Single.just(service.getNotificationChannelGroups(pkg, user));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<Integer> observeInterruptionFilter() {
         return interruptionFilterSubject;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<Integer> getInterruptionFilter() {
         return Single.just(service.getCurrentInterruptionFilter());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable requestInterruptionFilter(final int interruptionFilter) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -326,21 +327,21 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
         });
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<Integer> observeListenerHints() {
         return listenerHintsSubject;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<Integer> getListenerHints() {
         return Single.just(service.getCurrentListenerHints());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Completable requestListenerHints(final int hints) {
         return Completable.fromCallable(new Callable<Object>() {
@@ -352,14 +353,14 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
         });
     }
 
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Flowable<NotificationListenerService.RankingMap> observeRanking() {
         return rankingSubject;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     @Override
     public Single<NotificationListenerService.RankingMap> getRanking() {
         return Single.just(service.getCurrentRanking());

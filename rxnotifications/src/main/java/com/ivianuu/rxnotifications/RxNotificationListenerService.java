@@ -30,9 +30,9 @@ import android.support.annotation.NonNull;
 import com.ivianuu.rxserviceconnection.RxBinder;
 
 /**
- * @author Manuel Wrage (IVIanuu)
+ * Rx notification listener service
  */
-public class RxNotificationListenerService extends NotificationListenerService {
+public final class RxNotificationListenerService extends NotificationListenerService {
 
     private static final String EXTRA_BIND_INTERNALLY = "bind_internally";
 

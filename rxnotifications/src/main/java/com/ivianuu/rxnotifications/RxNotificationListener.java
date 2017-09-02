@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.UserHandle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
@@ -42,13 +43,13 @@ public interface RxNotificationListener {
     /**
      * Emits on listener connection changes
      */
-    @NonNull
+    @CheckResult @NonNull
     Observable<Boolean> observeListenerConnected();
 
     /**
      * Returns if the listener is currently connected
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<Boolean> isListenerConnected();
 
     // NOTIFICATIONS
@@ -56,68 +57,68 @@ public interface RxNotificationListener {
     /**
      * Emits when a new notification was posted or removed
      */
-    @NonNull
+    @CheckResult @NonNull
     Flowable<NotificationEvent> observeNotificationEvents();
 
     /**
      * Emits on active notification changes
      */
-    @NonNull
+    @CheckResult @NonNull
     Flowable<List<StatusBarNotification>> observeActiveNotifications();
 
     /**
      * Returns current active notifications
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<List<StatusBarNotification>> getActiveNotifications();
 
     /**
      * Returns current snoozed notifications
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     Single<List<StatusBarNotification>> getSnoozedNotifications();
 
     /**
      * Cancels the provided notification
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable cancelNotification(@NonNull StatusBarNotification statusBarNotification);
 
     /**
      * Cancels the provided notification
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable cancelNotifications(@NonNull List<StatusBarNotification> statusBarNotification);
 
     /**
      * Cancels all notifications
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable cancelAllNotifications();
 
     /**
      * Sets the notification as shown
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable setNotificationShown(@NonNull StatusBarNotification sbn);
 
     /**
      * Sets the notifications as shown
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable setNotificationsShown(@NonNull List<StatusBarNotification> sbns);
 
     /**
      * Snoozes the notification for the desired duration
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable snoozeNotification(@NonNull StatusBarNotification sbn, long duration);
 
     /**
      * Snoozes the notification for the desired duration
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable snoozeNotifications(@NonNull List<StatusBarNotification> sbns, long duration);
 
     // CHANNELS
@@ -126,19 +127,19 @@ public interface RxNotificationListener {
      * Emits on channel events
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     Flowable<ChannelEvent> observeChannelEvents();
 
     /**
      * Returns all notifications channels from the package by the user
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<List<NotificationChannel>> getNotificationChannels(@NonNull String pkg, @NonNull UserHandle user);
 
     /**
      * Updates the notification channel
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable updateNotificationChannel(@NonNull String pkg, @NonNull UserHandle user, @NonNull NotificationChannel channel);
 
     // CHANNEL GROUPS
@@ -147,13 +148,13 @@ public interface RxNotificationListener {
      * Emits on channel group events
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @NonNull
+    @CheckResult @NonNull
     Flowable<ChannelGroupEvent> observeChannelGroupEvents();
 
     /**
      * Returns the notification channel groups for the package by the user
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<List<NotificationChannelGroup>> getNotificationChannelGroups(@NonNull String pkg, @NonNull UserHandle user);
 
     // INTERRUPTION FILTER
@@ -162,21 +163,21 @@ public interface RxNotificationListener {
      * Emits on interruption filter changes
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     Flowable<Integer> observeInterruptionFilter();
 
     /**
      * Returns the current interruption filter
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     Single<Integer> getInterruptionFilter();
 
     /**
      * Try's to the set the interruption filter
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @CheckResult @NonNull
     Completable requestInterruptionFilter(int interruptionFilter);
 
     // LISTENER HINTS
@@ -184,19 +185,19 @@ public interface RxNotificationListener {
     /**
      * Emits on listener hint changes
      */
-    @NonNull
+    @CheckResult @NonNull
     Flowable<Integer> observeListenerHints();
 
     /**
      * Returns the current listener hints
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<Integer> getListenerHints();
 
     /**
      * Try's to set the listener hints
      */
-    @NonNull
+    @CheckResult @NonNull
     Completable requestListenerHints(int hints);
 
     // RANKING
@@ -204,13 +205,13 @@ public interface RxNotificationListener {
     /**
      * Emits on ranking changes
      */
-    @NonNull
+    @CheckResult @NonNull
     Flowable<NotificationListenerService.RankingMap> observeRanking();
 
     /**
      * Returns the current ranking
      */
-    @NonNull
+    @CheckResult @NonNull
     Single<NotificationListenerService.RankingMap> getRanking();
 
 }
