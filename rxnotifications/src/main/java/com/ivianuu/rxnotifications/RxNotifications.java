@@ -80,12 +80,9 @@ public class RxNotifications {
                             if (!e.isDisposed()) {
                                 e.onSuccess(service.getListener());
                             }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                if (!e.isDisposed()) {
-                                    e.onError(throwable);
-                                }
+                        }, throwable -> {
+                            if (!e.isDisposed()) {
+                                e.onError(throwable);
                             }
                         });
             }
