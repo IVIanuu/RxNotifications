@@ -52,31 +52,25 @@ public class MainActivity extends AppCompatActivity {
 
         final RxNotifications rxNotifications = RxNotifications.get(this);
         Disposable disposable = rxNotifications.getNotificationListener()
-                .subscribe(new Consumer<RxNotificationListener>() {
-                    @Override
-                    public void accept(RxNotificationListener rxNotificationListener) throws Exception {
-                        Log.d("rxnotifications", "listener available");
-                        startListeníng(rxNotificationListener);
-                    }
+                .subscribe(rxNotificationListener -> {
+                    Log.d("rxnotifications", "listener available");
+                    startListeníng(rxNotificationListener);
                 });
         compositeDisposable.add(disposable);
     }
 
     private void startListeníng(final RxNotificationListener rxNotificationListener) {
         Disposable notificationsEventsDisposable = rxNotificationListener.observeNotificationEvents()
-                .subscribe(new Consumer<NotificationEvent>() {
-                    @Override
-                    public void accept(NotificationEvent notificationEvent) throws Exception {
-                        switch (notificationEvent.getEventType()) {
-                            case NotificationEvent.NotificationEventType.NOTIFICATION_POSTED:
-                                Log.d("rxnotifications", "posted "
-                                        + notificationEvent.getStatusBarNotification().getPackageName());
-                                break;
-                            case NotificationEvent.NotificationEventType.NOTIFICATION_REMOVED:
-                                Log.d("rxnotifications", "removed "
-                                        + notificationEvent.getStatusBarNotification().getPackageName());
-                                break;
-                        }
+                .subscribe(notificationEvent -> {
+                    switch (notificationEvent.getEventType()) {
+                        case NotificationEvent.NotificationEventType.NOTIFICATION_POSTED:
+                            Log.d("rxnotifications", "posted "
+                                    + notificationEvent.getStatusBarNotification().getPackageName());
+                            break;
+                        case NotificationEvent.NotificationEventType.NOTIFICATION_REMOVED:
+                            Log.d("rxnotifications", "removed "
+                                    + notificationEvent.getStatusBarNotification().getPackageName());
+                            break;
                     }
                 });
         compositeDisposable.add(notificationsEventsDisposable);

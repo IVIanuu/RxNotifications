@@ -186,30 +186,24 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable cancelNotifications(@NonNull final List<StatusBarNotification> statusBarNotification) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                for (StatusBarNotification sbn : statusBarNotification) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        service.cancelNotification(sbn.getKey());
-                    } else {
-                        service.cancelNotification(sbn.getPackageName(), sbn.getTag(), sbn.getId());
-                    }
+        return Completable.fromCallable(() -> {
+            for (StatusBarNotification sbn : statusBarNotification) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    service.cancelNotification(sbn.getKey());
+                } else {
+                    service.cancelNotification(sbn.getPackageName(), sbn.getTag(), sbn.getId());
                 }
-                return new Object();
             }
+            return new Object();
         });
     }
 
     @CheckResult @NonNull
     @Override
     public Completable cancelAllNotifications() {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                service.cancelAllNotifications();
-                return new Object();
-            }
+        return Completable.fromCallable(() -> {
+            service.cancelAllNotifications();
+            return new Object();
         });
     }
 
@@ -224,16 +218,13 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable setNotificationsShown(@NonNull final List<StatusBarNotification> sbns) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                String[] keys = new String[]{};
-                for (int i = 0; i < sbns.size(); i++) {
-                    keys[i] = sbns.get(i).getKey();
-                }
-                service.setNotificationsShown(keys);
-                return new Object();
+        return Completable.fromCallable(() -> {
+            String[] keys = new String[]{};
+            for (int i = 0; i < sbns.size(); i++) {
+                keys[i] = sbns.get(i).getKey();
             }
+            service.setNotificationsShown(keys);
+            return new Object();
         });
     }
 
@@ -248,14 +239,11 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable snoozeNotifications(@NonNull final List<StatusBarNotification> sbns, final long duration) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                for (StatusBarNotification sbn : sbns) {
-                    service.snoozeNotification(sbn.getKey(), duration);
-                }
-                return new Object();
+        return Completable.fromCallable(() -> {
+            for (StatusBarNotification sbn : sbns) {
+                service.snoozeNotification(sbn.getKey(), duration);
             }
+            return new Object();
         });
     }
 
@@ -277,12 +265,9 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable updateNotificationChannel(@NonNull final String pkg, @NonNull final UserHandle user, @NonNull final NotificationChannel channel) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                service.updateNotificationChannel(pkg, user, channel);
-                return new Object();
-            }
+        return Completable.fromCallable(() -> {
+            service.updateNotificationChannel(pkg, user, channel);
+            return new Object();
         });
     }
 
@@ -318,12 +303,9 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable requestInterruptionFilter(final int interruptionFilter) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                service.requestInterruptionFilter(interruptionFilter);
-                return new Object();
-            }
+        return Completable.fromCallable(() -> {
+            service.requestInterruptionFilter(interruptionFilter);
+            return new Object();
         });
     }
 
@@ -344,12 +326,9 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable requestListenerHints(final int hints) {
-        return Completable.fromCallable(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                service.requestListenerHints(hints);
-                return new Object();
-            }
+        return Completable.fromCallable(() -> {
+            service.requestListenerHints(hints);
+            return new Object();
         });
     }
 

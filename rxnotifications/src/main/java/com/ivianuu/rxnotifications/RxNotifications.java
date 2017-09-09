@@ -67,33 +67,27 @@ public class RxNotifications {
      */
     @CheckResult @NonNull
     public Single<RxNotificationListener> getNotificationListener() {
-        return Single.create(new SingleOnSubscribe<RxNotificationListener>() {
-            @Override
-            public void subscribe(final SingleEmitter<RxNotificationListener> e) throws Exception {
-                if (service != null) {
-                    if (!e.isDisposed()) {
-                        e.onSuccess(service.getListener());
-                    }
-                } else {
-                    RxServiceConnection.<RxNotificationListenerService>bind(
-                            context, RxNotificationListenerService.createBindingIntent(context))
-                            .subscribe(new Consumer<RxNotificationListenerService>() {
-                                @Override
-                                public void accept(RxNotificationListenerService service) throws Exception {
-                                    RxNotifications.this.service = service;
-                                    if (!e.isDisposed()) {
-                                        e.onSuccess(service.getListener());
-                                    }
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    if (!e.isDisposed()) {
-                                        e.onError(throwable);
-                                    }
-                                }
-                            });
+        return Single.create(e -> {
+            if (service != null) {
+                if (!e.isDisposed()) {
+                    e.onSuccess(service.getListener());
                 }
+            } else {
+                RxServiceConnection.<RxNotificationListenerService>bind(
+                        context, RxNotificationListenerService.createBindingIntent(context))
+                        .subscribe(service -> {
+                            RxNotifications.this.service = service;
+                            if (!e.isDisposed()) {
+                                e.onSuccess(service.getListener());
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                if (!e.isDisposed()) {
+                                    e.onError(throwable);
+                                }
+                            }
+                        });
             }
         });
     }
