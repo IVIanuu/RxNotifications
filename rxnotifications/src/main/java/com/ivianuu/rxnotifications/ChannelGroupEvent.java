@@ -34,7 +34,7 @@ import static android.service.notification.NotificationListenerService.NOTIFICAT
  * Represents a channel group event
  */
 @RequiresApi(Build.VERSION_CODES.O)
-public class ChannelGroupEvent {
+public final class ChannelGroupEvent {
 
     @IntDef(value = {
             NOTIFICATION_CHANNEL_OR_GROUP_ADDED,

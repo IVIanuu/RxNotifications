@@ -21,7 +21,7 @@ import android.content.Context;
 import android.provider.Settings;
 
 /**
- * @author Manuel Wrage (IVIanuu)
+ * Utils
  */
 final class Util {
 

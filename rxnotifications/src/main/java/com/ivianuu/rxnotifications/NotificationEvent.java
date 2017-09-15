@@ -29,7 +29,7 @@ import static com.ivianuu.rxnotifications.NotificationEvent.NotificationEventTyp
 /**
  * Represents a notification event
  */
-public class NotificationEvent {
+public final class NotificationEvent {
 
     @IntDef(value = {NOTIFICATION_POSTED, NOTIFICATION_REMOVED})
     @Retention(RetentionPolicy.SOURCE)

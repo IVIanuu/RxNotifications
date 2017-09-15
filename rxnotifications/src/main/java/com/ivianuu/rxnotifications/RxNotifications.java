@@ -31,7 +31,7 @@ import io.reactivex.functions.Consumer;
 /**
  * Wraps a notification listener service in observables
  */
-public class RxNotifications {
+public final class RxNotifications {
 
     @SuppressLint("StaticFieldLeak")
     private static RxNotifications instance;
