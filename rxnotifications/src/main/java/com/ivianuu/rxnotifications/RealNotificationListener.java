@@ -40,13 +40,15 @@ import io.reactivex.processors.BehaviorProcessor;
 import io.reactivex.processors.PublishProcessor;
 import io.reactivex.subjects.PublishSubject;
 
+import static com.ivianuu.preconditions.Preconditions.checkCollectionElementsNotNull;
+import static com.ivianuu.preconditions.Preconditions.checkNotNull;
 import static com.ivianuu.rxnotifications.NotificationEvent.NotificationEventType.NOTIFICATION_POSTED;
 import static com.ivianuu.rxnotifications.NotificationEvent.NotificationEventType.NOTIFICATION_REMOVED;
 
 /**
  * Implementation of a rx notification listener
  */
-class RealRxNotificationListener implements RxNotificationListener, RxNotificationListenerService.ServiceCallbacks {
+class RealNotificationListener implements RxNotificationListener, RxNotificationListenerService.ServiceCallbacks {
 
     private RxNotificationListenerService service;
 
@@ -59,7 +61,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     private BehaviorProcessor<Integer> listenerHintsSubject = BehaviorProcessor.create();
     private BehaviorProcessor<NotificationListenerService.RankingMap> rankingSubject = BehaviorProcessor.create();
 
-    RealRxNotificationListener(@NonNull RxNotificationListenerService service) {
+    RealNotificationListener(@NonNull RxNotificationListenerService service) {
         this.service = service;
     }
 
@@ -186,6 +188,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable cancelNotifications(@NonNull final List<StatusBarNotification> statusBarNotification) {
+        checkCollectionElementsNotNull(statusBarNotification, "sbn");
         return Completable.fromCallable(() -> {
             for (StatusBarNotification sbn : statusBarNotification) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -218,6 +221,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable setNotificationsShown(@NonNull final List<StatusBarNotification> sbns) {
+        checkCollectionElementsNotNull(sbns, "sbn");
         return Completable.fromCallable(() -> {
             String[] keys = new String[]{};
             for (int i = 0; i < sbns.size(); i++) {
@@ -239,6 +243,7 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Completable snoozeNotifications(@NonNull final List<StatusBarNotification> sbns, final long duration) {
+        checkCollectionElementsNotNull(sbns, "sbn");
         return Completable.fromCallable(() -> {
             for (StatusBarNotification sbn : sbns) {
                 service.snoozeNotification(sbn.getKey(), duration);
@@ -258,13 +263,20 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @CheckResult @NonNull
     @Override
     public Single<List<NotificationChannel>> getNotificationChannels(@NonNull String pkg, @NonNull UserHandle user) {
+        checkNotNull(pkg, "pkg == null");
+        checkNotNull(user, "userHandle == null");
         return Single.just(service.getNotificationChannels(pkg, user));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @CheckResult @NonNull
     @Override
-    public Completable updateNotificationChannel(@NonNull final String pkg, @NonNull final UserHandle user, @NonNull final NotificationChannel channel) {
+    public Completable updateNotificationChannel(@NonNull final String pkg,
+                                                 @NonNull final UserHandle user,
+                                                 @NonNull final NotificationChannel channel) {
+        checkNotNull(pkg, "pkg == null");
+        checkNotNull(user, "userHandle == null");
+        checkNotNull(channel, "channel == null");
         return Completable.fromCallable(() -> {
             service.updateNotificationChannel(pkg, user, channel);
             return new Object();
@@ -281,7 +293,10 @@ class RealRxNotificationListener implements RxNotificationListener, RxNotificati
     @RequiresApi(api = Build.VERSION_CODES.O)
     @CheckResult @NonNull
     @Override
-    public Single<List<NotificationChannelGroup>> getNotificationChannelGroups(@NonNull String pkg, @NonNull UserHandle user) {
+    public Single<List<NotificationChannelGroup>> getNotificationChannelGroups(@NonNull String pkg,
+                                                                               @NonNull UserHandle user) {
+        checkNotNull(pkg, "pkg == null");
+        checkNotNull(user, "userHandle == null");
         return Single.just(service.getNotificationChannelGroups(pkg, user));
     }
 

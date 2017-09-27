@@ -28,6 +28,8 @@ import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.functions.Consumer;
 
+import static com.ivianuu.preconditions.Preconditions.checkNotNull;
+
 /**
  * Wraps a notification listener service in observables
  */
@@ -48,6 +50,7 @@ public final class RxNotifications {
     }
 
     public static RxNotifications get(@NonNull Context context) {
+        checkNotNull(context, "context == null");
         if (instance == null) {
             instance = new RxNotifications(context.getApplicationContext());
         }

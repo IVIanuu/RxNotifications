@@ -27,6 +27,9 @@ dependencies {
 
     // RxServiceConnection
     api rootProject.ext.rxServiceConnection
+
+    // Preconditions
+    implementation rootProject.ext.preconditions
 }
 
 // build a jar with source files

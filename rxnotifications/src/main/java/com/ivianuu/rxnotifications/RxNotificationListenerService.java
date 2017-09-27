@@ -55,7 +55,7 @@ public final class RxNotificationListenerService extends NotificationListenerSer
         }
     };
 
-    private RealRxNotificationListener notificationListener;
+    private RealNotificationListener notificationListener;
 
     private boolean listenerConnected;
 
@@ -63,7 +63,7 @@ public final class RxNotificationListenerService extends NotificationListenerSer
     public void onCreate() {
         super.onCreate();
 
-        notificationListener = new RealRxNotificationListener(this);
+        notificationListener = new RealNotificationListener(this);
     }
 
     @Override
