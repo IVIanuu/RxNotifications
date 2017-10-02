@@ -24,11 +24,8 @@ import android.support.annotation.NonNull;
 import com.ivianuu.rxserviceconnection.RxServiceConnection;
 
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.functions.Consumer;
 
-import static com.ivianuu.preconditions.Preconditions.checkNotNull;
+import static com.ivianuu.rxnotifications.Preconditions.checkNotNull;
 
 /**
  * Wraps a notification listener service in observables

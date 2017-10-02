@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -40,10 +39,9 @@ import io.reactivex.processors.BehaviorProcessor;
 import io.reactivex.processors.PublishProcessor;
 import io.reactivex.subjects.PublishSubject;
 
-import static com.ivianuu.preconditions.Preconditions.checkCollectionElementsNotNull;
-import static com.ivianuu.preconditions.Preconditions.checkNotNull;
 import static com.ivianuu.rxnotifications.NotificationEvent.NotificationEventType.NOTIFICATION_POSTED;
 import static com.ivianuu.rxnotifications.NotificationEvent.NotificationEventType.NOTIFICATION_REMOVED;
+import static com.ivianuu.rxnotifications.Preconditions.checkNotNull;
 
 /**
  * Implementation of a rx notification listener
@@ -188,7 +186,7 @@ class RealNotificationListener implements RxNotificationListener, RxNotification
     @CheckResult @NonNull
     @Override
     public Completable cancelNotifications(@NonNull final List<StatusBarNotification> statusBarNotification) {
-        checkCollectionElementsNotNull(statusBarNotification, "sbn");
+
         return Completable.fromCallable(() -> {
             for (StatusBarNotification sbn : statusBarNotification) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -221,7 +219,7 @@ class RealNotificationListener implements RxNotificationListener, RxNotification
     @CheckResult @NonNull
     @Override
     public Completable setNotificationsShown(@NonNull final List<StatusBarNotification> sbns) {
-        checkCollectionElementsNotNull(sbns, "sbn");
+        checkNotNull(sbns, "sbn == null");
         return Completable.fromCallable(() -> {
             String[] keys = new String[]{};
             for (int i = 0; i < sbns.size(); i++) {
@@ -243,7 +241,7 @@ class RealNotificationListener implements RxNotificationListener, RxNotification
     @CheckResult @NonNull
     @Override
     public Completable snoozeNotifications(@NonNull final List<StatusBarNotification> sbns, final long duration) {
-        checkCollectionElementsNotNull(sbns, "sbn");
+        checkNotNull(sbns, "sbns == null");
         return Completable.fromCallable(() -> {
             for (StatusBarNotification sbn : sbns) {
                 service.snoozeNotification(sbn.getKey(), duration);
